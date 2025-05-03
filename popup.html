@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Summarizer</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      min-width: 350px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 15px;
+      background-color: #f4f4f9;
+      color: #333;
+      position: relative; /* Needed for absolute positioning of the gear icon */
+    }
+    .options-link {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px; /* Adjust size as needed */
+      text-decoration: none;
+      color: #666;
+      transition: color 0.3s ease;
+    }
+    .options-link:hover, .donate-link:hover {
+      color: #006666; /* Darker teal for hover */
+    }
+    .donate-link {
+      position: absolute;
+      top: 10px;
+      right: 40px; /* Position next to options */
+      font-size: 20px; /* Match options icon size */
+      text-decoration: none;
+      color: #666;
+      transition: color 0.3s ease;
+    }
+    h3 {
+      text-align: center;
+      color: #006666; /* Darker teal for heading */
+      margin-top: 25px; /* Add margin to avoid overlap with icon */
+      margin-bottom: 15px;
+    }
+    .button-container {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    button {
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #008080; /* Teal color */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #006666; /* Darker teal for hover */
+    }
+    #status {
+      margin-top: 15px;
+      font-style: italic;
+      color: #666;
+      text-align: center;
+      min-height: 1.2em; /* Reserve space */
+    }
+    #summary {
+      margin-top: 15px;
+      white-space: pre-wrap;
+      max-height: 250px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 10px;
+      background-color: #ffffff;
+      border-radius: 4px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    #summary:empty { /* Hide border when empty */
+        border: none;
+        padding: 0;
+        margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <a href="https://paypal.me/iscopan" target="_blank" class="donate-link" title="Donate">❤️</a>
+  <a href="options.html" target="_blank" class="options-link" title="Options">⚙️</a>
+  <h3>Summarize this page</h3>
+  <div class="button-container">
+    <button id="summarizeBtn">Summarize</button>
+  </div>
+  <div id="status"></div>
+  <div id="summary"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

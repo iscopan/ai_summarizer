@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Summarizer Settings</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 30px;
+      background-color: #f9f9f9;
+      color: #333;
+      max-width: 700px;
+      margin: 20px auto;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    h2, h3 {
+      color: #006666; /* Darker teal for headings */
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #555;
+    }
+    input[type="password"] {
+      width: calc(100% - 22px); /* Adjust for padding */
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    button {
+      padding: 12px 25px;
+      cursor: pointer;
+      background-color: #008080; /* Teal color for save */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 15px;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #006666; /* Darker teal for hover */
+    }
+    #status {
+      margin-top: 20px;
+      color: green;
+      font-weight: bold;
+      min-height: 1.2em; /* Reserve space */
+    }
+    .tutorial {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+    .tutorial h3 {
+      margin-bottom: 15px;
+    }
+    .tutorial p, .tutorial ol {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #444;
+    }
+    .tutorial ol {
+      padding-left: 25px;
+    }
+    .tutorial li {
+      margin-bottom: 10px;
+    }
+    .tutorial code {
+      background-color: #e9e9e9;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+    .tutorial a {
+      color: #008080; /* Teal for links */
+      text-decoration: none;
+    }
+    .tutorial a:hover {
+      text-decoration: underline;
+    }
+    .donation-section {
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #eef4ff; /* Light blue background */
+      border: 1px solid #cce0ff;
+      border-radius: 6px;
+      text-align: center;
+    }
+    .donation-section p {
+      margin-bottom: 15px;
+      font-size: 15px;
+      color: #333;
+    }
+    .donate-button {
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #ffc107; /* Yellow/Gold color for donate */
+      color: #333;
+      border: none;
+      border-radius: 5px;
+      font-size: 15px;
+      font-weight: bold;
+      text-decoration: none; /* Remove underline from link styled as button */
+      display: inline-block; /* Allow padding and centering */
+      transition: background-color 0.3s ease;
+    }
+    .donate-button:hover {
+      background-color: #e0a800;
+    }
+    .collaboration-section {
+      margin-top: 25px; /* Space between donation and collaboration */
+      padding: 20px;
+      background-color: #f0f0f0; /* Light grey background */
+      border: 1px solid #dcdcdc;
+      border-radius: 6px;
+      text-align: center;
+    }
+    .collaboration-section p {
+      margin-bottom: 15px;
+      font-size: 15px;
+      color: #333;
+    }
+    .github-button {
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #333; /* Dark color for GitHub */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 15px;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+    }
+    .github-button:hover {
+      background-color: #555;
+    }
+    .help-link {
+      font-size: 12px;
+      margin-left: 10px;
+      color: #008080; /* Teal for links */
+      text-decoration: none;
+    }
+    .help-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h2>Gemini API Settings</h2>
+  <p>Enter your API key to use the Google Gemini summary service.</p>
+
+  <label for="apiKey">Gemini API Key:</label>
+  <input type="password" id="apiKey" placeholder="Enter your API key here">
+
+  <button id="saveBtn">Save Key</button>
+  <a href="#get-api-key-tutorial" class="help-link">(How to get one?)</a>
+  <div id="status"></div>
+
+  <div class="donation-section">
+    <h3>Support the Developer</h3>
+    <p>Thank you for using AI Summarizer! If you find this extension helpful, please consider supporting its development with a small donation. Your contribution helps keep the extension updated and free.</p>
+    <a href="https://paypal.me/iscopan" target="_blank" class="donate-button">Donate via PayPal ❤️</a>
+  </div>
+
+  <div class="collaboration-section">
+    <h3>Contribute to the Project</h3>
+    <p>This extension is open-source! You can view the code, report issues, or suggest improvements on GitHub. Contributions are welcome!</p>
+    <a href="https://github.com/iscopan/ai-summarizer" target="_blank" class="github-button">View on GitHub 💻</a>
+  </div>
+
+  <div class="tutorial">
+    <h3 id="get-api-key-tutorial">How to get a Google Gemini API Key?</h3>
+    <p>Follow these steps to get your free API key:</p>
+    <ol>
+      <li>Go to <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>. You might need to sign in with your Google account.</li>
+      <li>Click the "<strong>Create API key</strong>" button.</li>
+      <li>You will be asked to create a new Google Cloud project if you don't already have one associated. Follow the on-screen instructions to create or select a project.</li>
+      <li>Once the project is created (or if you already had one), your API key will be generated.</li>
+      <li><strong>Copy the API key</strong> shown on the screen. It's a long string of characters.</li>
+      <li>Return to this settings page and <strong>paste the API key</strong> into the field above.</li>
+      <li>Click the "<strong>Save Key</strong>" button.</li>
+    </ol>
+    <p>Important! Treat your API key like a password. Do not share it publicly.</p>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
