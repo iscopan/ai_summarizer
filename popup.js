@@ -38,7 +38,10 @@ function setLoading(loading) {
 
 function extractPageContent() {
   const main = document.querySelector('main') || document.querySelector('article') || document.body;
-  return main.innerText;
+  return {
+    text: main.innerText,
+    lang: document.documentElement.lang || '',
+  };
 }
 
 copyBtn.addEventListener('click', () => {
@@ -73,7 +76,7 @@ summarizeBtn.addEventListener('click', () => {
           return;
         }
 
-        const pageText = results[0].result;
+        const { text: pageText, lang: pageLang } = results[0].result;
         if (!pageText?.trim()) {
           setStatus('error', `❌ ${t('errNoContent')}`);
           setLoading(false);
@@ -82,7 +85,7 @@ summarizeBtn.addEventListener('click', () => {
 
         setStatus('loading', `<span class="spinner"></span> ${t('sendingToAI')}`);
 
-        chrome.runtime.sendMessage({ action: 'summarize', text: pageText }, (response) => {
+        chrome.runtime.sendMessage({ action: 'summarize', text: pageText, lang: pageLang }, (response) => {
           setLoading(false);
 
           if (chrome.runtime.lastError) {

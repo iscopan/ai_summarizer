@@ -2,6 +2,12 @@
 
 Thank you for considering contributing to AI Summarizer! 🎉
 
+## Architecture
+
+The project is divided into two parts:
+1. **The Chrome Extension**: pure HTML/CSS/JS, running in the browser.
+2. **The Backend Proxy**: a Node.js/Express application that forwards requests to OpenRouter securely.
+
 ## Getting Started
 
 1. **Fork** the repository on GitHub
@@ -9,33 +15,44 @@ Thank you for considering contributing to AI Summarizer! 🎉
    ```bash
    git clone https://github.com/YOUR_USERNAME/ai-summarizer.git
    ```
-3. **Load the extension** in Chrome:
-   - Open `chrome://extensions`
-   - Enable **Developer mode**
-   - Click **Load unpacked** → select the project folder
-4. Make your changes and **reload** the extension to test
+
+### Running the Extension Locally
+
+1. Open `chrome://extensions`
+2. Enable **Developer mode**
+3. Click **Load unpacked** → select the root project folder
+4. Since the extension relies on a backend, you'll want to run the backend locally too (see below), and update `background.js` to point to `http://localhost:3000/api/summarize`.
+
+### Running the Backend Locally
+
+1. `cd backend`
+2. `npm install`
+3. Copy the environment variables template: `cp .env.example .env`
+4. Edit `.env` and add your [OpenRouter API key](https://openrouter.ai/keys).
+5. Start the development server: `npm run dev`
 
 ## Development Guidelines
 
 ### Code Style
-- Plain JavaScript (ES2022, no transpilation needed)
+- Plain JavaScript (ES2022) for both extension and backend (no transpilers needed).
 - Use `const`/`let`, no `var`
 - Descriptive variable names in English
 - Keep functions small and focused
 - Add comments for non-obvious logic
+- Do not expose credentials or API keys anywhere in the extension code
 
 ### File Structure
-- **`background.js`** — service worker, calls the [OpenRouter API](https://openrouter.ai) using the `openrouter/free` model router
+- **`background.js`** — service worker, forwards requests to the backend proxy
 - **`popup.js / popup.html`** — the extension popup (≤ 340px wide)
 - **`options.js / options.html`** — settings page
-- **No build step** — keep it dependency-free
+- **`backend/`** — the Node.js API proxy that interacts directly with OpenRouter
 
 ### Commit Messages
 Follow conventional commits:
 ```
-feat: add support for custom AI models
+feat: extract language dynamically from html lang tag
 fix: handle rate limit errors gracefully
-docs: update OpenRouter key instructions
+docs: update architecture details
 chore: update CI workflow
 ```
 

@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'summarize') {
     (async () => {
       try {
-        const summary = await callBackend(request.text);
+        const summary = await callBackend(request.text, request.lang || '');
         sendResponse({ summary });
       } catch (error) {
         console.error('Background: Error calling backend:', error);
@@ -21,13 +21,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-async function callBackend(text) {
+async function callBackend(text, lang) {
   let response;
   try {
     response = await fetch(BACKEND_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text }),
+      body: JSON.stringify({ text, lang }),
     });
   } catch (networkError) {
     throw new Error('Could not reach the summarizer service. Check your internet connection.');

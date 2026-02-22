@@ -48,28 +48,45 @@ app.get('/health', (_req, res) => {
     res.json({ status: 'ok', version: '1.0.0' });
 });
 
+// --- Map BCP-47 language tags to natural language names ---
+const LANG_NAMES = {
+    es: 'Spanish', en: 'English', fr: 'French', de: 'German',
+    it: 'Italian', pt: 'Portuguese', nl: 'Dutch', pl: 'Polish',
+    ru: 'Russian', zh: 'Chinese', ja: 'Japanese', ko: 'Korean',
+    ar: 'Arabic', tr: 'Turkish', sv: 'Swedish', da: 'Danish',
+    fi: 'Finnish', nb: 'Norwegian', ca: 'Catalan', eu: 'Basque',
+    gl: 'Galician',
+};
+
 // --- Main summarize endpoint ---
 app.post('/api/summarize', async (req, res) => {
-    const { text } = req.body;
+    const { text, lang } = req.body;
 
     if (!text || typeof text !== 'string' || text.trim().length === 0) {
         return res.status(400).json({ error: 'Missing or invalid "text" field in request body.' });
     }
 
+    // Normalise BCP-47 tag: "es-ES" → "es"
+    const baseLang = (typeof lang === 'string' ? lang.split('-')[0].toLowerCase() : '');
+    const langName = LANG_NAMES[baseLang];
+
     const truncated = text.length > MAX_TEXT_LENGTH
         ? text.substring(0, MAX_TEXT_LENGTH) + '...'
         : text;
 
-    const prompt = `You are an expert assistant in summarizing web page content.
+    // Explicit language instruction when known; heuristic fallback otherwise.
+    const languageInstruction = langName
+        ? `You MUST write the summary in ${langName}. Do not use any other language.`
+        : 'Detect the language of the text and write the summary in that exact same language. Never default to English.';
 
-CRITICAL RULE: Detect the language of the text below and write the summary in THAT EXACT SAME LANGUAGE. If the text is in Spanish, reply in Spanish. If it is in French, reply in French. Never reply in English unless the original text is in English.
+    const prompt = `You are an expert assistant that summarizes web page content.
+
+${languageInstruction}
 
 Summarize the following text concisely and clearly. Reply with plain text only — no markdown, no bullet points, no headers, no bold or italic formatting of any kind.
 
 Text to summarize:
-"${truncated}"
-
-Remember: your reply must be in the same language as the text above.`;
+"${truncated}"`;
 
     try {
         const openRouterRes = await fetch(OPENROUTER_API_URL, {
