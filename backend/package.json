@@ -1,0 +1,22 @@
+{
+    "name": "ai-summarizer-backend",
+    "version": "1.0.0",
+    "description": "Intermediate backend proxy for AI Summarizer Chrome Extension",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "express-rate-limit": "^7.5.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.9"
+    },
+    "engines": {
+        "node": ">=18"
+    }
+}
