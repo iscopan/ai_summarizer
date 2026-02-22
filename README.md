@@ -5,7 +5,7 @@
   <p>Built on <a href="https://openrouter.ai">OpenRouter</a> using the <code>openrouter/free</code> model router.</p>
 
   <a href="https://github.com/iscopan/ai-summarizer/blob/main/LICENSE"><img alt="License: CC BY-NC-SA 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg"></a>
-  <a href="https://github.com/iscopan/ai-summarizer/actions"><img alt="CI" src="https://github.com/iscopan/ai-summarizer/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/iscopan/ai_summarizer/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/iscopan/ai_summarizer/actions/workflows/ci.yml/badge.svg"></a>
   <img alt="Manifest v3" src="https://img.shields.io/badge/Manifest-v3-blue">
   <img alt="Free to use" src="https://img.shields.io/badge/Free-No%20setup%20needed-teal">
 </div>
