@@ -50,6 +50,7 @@ jobs:
               languageOptions: {
                 globals: {
                   ...globals.browser,
+                  ...globals.serviceworker,
                   chrome: "readonly",
                 },
                 ecmaVersion: 2022,
