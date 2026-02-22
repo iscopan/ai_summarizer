@@ -10,7 +10,7 @@
     "storage"
   ],
   "host_permissions": [
-    "https://your-backend.example.com/*"
+    "https://aisummarizer.fpuente.com/*"
   ],
   "action": {
     "default_popup": "popup.html",

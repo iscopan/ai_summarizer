@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------
 // Backend proxy URL — update this to your deployed backend URL before packing.
 // ---------------------------------------------------------------------------
-const BACKEND_URL = 'https://your-backend.example.com/api/summarize';
+const BACKEND_URL = 'https://aisummarizer.fpuente.com/api/summarize';
 
 // Listen for messages from the popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {

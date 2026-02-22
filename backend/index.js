@@ -60,7 +60,16 @@ app.post('/api/summarize', async (req, res) => {
         ? text.substring(0, MAX_TEXT_LENGTH) + '...'
         : text;
 
-    const prompt = `You are an expert assistant in summarizing web page content. Summarize the following text concisely and clearly, in the same language as the original content. Reply with plain text only — no markdown, no bullet points, no headers, no bold or italic formatting of any kind.\n\n"${truncated}"`;
+    const prompt = `You are an expert assistant in summarizing web page content.
+
+CRITICAL RULE: Detect the language of the text below and write the summary in THAT EXACT SAME LANGUAGE. If the text is in Spanish, reply in Spanish. If it is in French, reply in French. Never reply in English unless the original text is in English.
+
+Summarize the following text concisely and clearly. Reply with plain text only — no markdown, no bullet points, no headers, no bold or italic formatting of any kind.
+
+Text to summarize:
+"${truncated}"
+
+Remember: your reply must be in the same language as the text above.`;
 
     try {
         const openRouterRes = await fetch(OPENROUTER_API_URL, {
