@@ -1,3 +1,4 @@
+/* eslint-env serviceworker */
 // Load API key from config.js (gitignored, never committed to GitHub).
 // Falls back to empty string if config.js is missing (fresh clone / dev without key).
 // See config.example.js for the template.
