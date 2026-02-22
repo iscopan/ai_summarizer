@@ -1,109 +1,112 @@
 const summarizeBtn = document.getElementById('summarizeBtn');
+const btnText = document.getElementById('btnText');
+const btnIcon = document.getElementById('btnIcon');
 const statusDiv = document.getElementById('status');
 const summaryDiv = document.getElementById('summary');
+const summaryCard = document.getElementById('summary-card');
+const copyBtn = document.getElementById('copyBtn');
 
-// Check for API key when the popup loads
-document.addEventListener('DOMContentLoaded', () => {
-  // Use chrome.storage.local to match where options.js saves the key
-  chrome.storage.local.get(['apiKey'], (result) => {
-    if (result.apiKey) {
-      // API Key exists: Ensure button is enabled and status is clear
-      statusDiv.textContent = ''; // Clear any potential message
-      summarizeBtn.disabled = false;
-      summarizeBtn.style.backgroundColor = ''; // Reset to default CSS color
-      summarizeBtn.style.cursor = 'pointer';
-    } else {
-      // API Key missing: Show message, disable and grey out button
-      statusDiv.innerHTML = `API key not set. Please <a href="#" id="optionsLink">configure it</a>.`;
-      const optionsLink = document.getElementById('optionsLink');
-      if (optionsLink) {
-        optionsLink.addEventListener('click', (e) => {
-          e.preventDefault();
-          chrome.runtime.openOptionsPage();
-        });
-      }
-      summarizeBtn.disabled = true;
-      summarizeBtn.style.backgroundColor = '#cccccc'; // Grey color
-      summarizeBtn.style.cursor = 'not-allowed';
-    }
-  });
-});
+// Shorthand for i18n
+const t = (key) => chrome.i18n.getMessage(key) || key;
 
-// Función para extraer el contenido (se ejecutará en el contexto de la página)
-function extractPageContent() {
-  // Intenta obtener el contenido principal, si no, usa el cuerpo entero
-  // Puedes mejorar esto buscando etiquetas específicas como <article>, <main>
-  // O usando librerías como Readability.js (más complejo de integrar)
-  const mainContent = document.querySelector('main') || document.querySelector('article') || document.body;
-  return mainContent.innerText;
+// Apply i18n to static UI elements
+function applyI18n() {
+  document.getElementById('btnText').textContent = t('summarizeBtn');
+  document.getElementById('summaryLabel').textContent = t('summaryLabel');
+  document.getElementById('copyBtn').title = t('copy');
+  document.getElementById('footerFree').textContent = t('freeToUse');
+  document.getElementById('footerDonate').textContent = t('donate');
 }
 
+function setStatus(type, html) {
+  statusDiv.className = type || '';
+  statusDiv.innerHTML = html;
+}
+
+function setLoading(loading) {
+  summarizeBtn.disabled = loading;
+  if (loading) {
+    btnIcon.className = 'spinner';
+    btnIcon.textContent = '';
+    btnText.textContent = t('summarizing');
+  } else {
+    btnIcon.className = '';
+    btnIcon.textContent = '⚡';
+    btnText.textContent = t('summarizeBtn');
+  }
+}
+
+function extractPageContent() {
+  const main = document.querySelector('main') || document.querySelector('article') || document.body;
+  return main.innerText;
+}
+
+copyBtn.addEventListener('click', () => {
+  const text = summaryDiv.textContent;
+  if (text) {
+    navigator.clipboard.writeText(text).then(() => {
+      copyBtn.textContent = '✅';
+      setTimeout(() => { copyBtn.textContent = '📋'; }, 2000);
+    });
+  }
+});
+
 summarizeBtn.addEventListener('click', () => {
-  statusDiv.textContent = 'Extracting content...';
-  summaryDiv.textContent = ''; // Clear previous summary
+  setStatus('loading', `<span class="spinner"></span> ${t('extracting')}`);
+  summaryCard.classList.remove('visible');
+  summaryDiv.textContent = '';
+  setLoading(true);
 
-  // Get the current active tab
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    if (tabs.length === 0) {
-        statusDiv.textContent = 'Error: Active tab not found.';
-        return;
+    if (!tabs.length) {
+      setStatus('error', `❌ ${t('errNoTab')}`);
+      setLoading(false);
+      return;
     }
-    const tabId = tabs[0].id;
 
-    // Inyectar y ejecutar la función para extraer contenido
     chrome.scripting.executeScript(
-      {
-        target: { tabId: tabId },
-        function: extractPageContent,
-      },
-      (injectionResults) => {
-        // Check for injection errors
-        if (chrome.runtime.lastError || !injectionResults || injectionResults.length === 0) {
-          statusDiv.textContent = `Error extracting: ${chrome.runtime.lastError?.message || 'Unexpected result'}`;
-          console.error("Injection error or no results:", chrome.runtime.lastError, injectionResults);
+      { target: { tabId: tabs[0].id }, function: extractPageContent },
+      (results) => {
+        if (chrome.runtime.lastError || !results?.length) {
+          setStatus('error', `❌ ${t('errRead')} ${chrome.runtime.lastError?.message || ''}`);
+          setLoading(false);
           return;
         }
 
-        // The result is in injectionResults[0].result
-        if (injectionResults[0].result) {
-          const pageText = injectionResults[0].result;
-          statusDiv.textContent = 'Sending to AI for summary...';
-
-          // Send the text to the background script to process with the API
-          chrome.runtime.sendMessage(
-            { action: "summarize", text: pageText },
-            (response) => {
-              if (chrome.runtime.lastError) {
-                  // Error communicating with the background script
-                  statusDiv.textContent = `Communication error: ${chrome.runtime.lastError.message}`;
-                  console.error("Message sending error:", chrome.runtime.lastError);
-                  return;
-              }
-
-              // Process response from background script
-              if (response && response.summary) {
-                statusDiv.textContent = 'Summary completed:';
-                summaryDiv.textContent = response.summary;
-              } else if (response && response.error) {
-                 statusDiv.textContent = `Error: ${response.error}`;
-                 // Suggest configuring the API key if that is the error
-                 if (response.error.includes("API key")) {
-                    statusDiv.innerHTML += ` <a href="#" id="openOptionsLink">Configure API Key</a>`;
-                    document.getElementById('openOptionsLink')?.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        chrome.runtime.openOptionsPage();
-                    });
-                 }
-              } else {
-                  statusDiv.textContent = 'Error: Unexpected response from background script.';
-                  console.error("Unexpected response:", response);
-              }
-            }
-          );
-        } else {
-          statusDiv.textContent = 'Could not extract content from the page.';
+        const pageText = results[0].result;
+        if (!pageText?.trim()) {
+          setStatus('error', `❌ ${t('errNoContent')}`);
+          setLoading(false);
+          return;
         }
+
+        setStatus('loading', `<span class="spinner"></span> ${t('sendingToAI')}`);
+
+        chrome.runtime.sendMessage({ action: 'summarize', text: pageText }, (response) => {
+          setLoading(false);
+
+          if (chrome.runtime.lastError) {
+            setStatus('error', `❌ ${chrome.runtime.lastError.message}`);
+            return;
+          }
+
+          if (response?.summary) {
+            setStatus('success', `✅ ${t('done')}`);
+            summaryDiv.textContent = response.summary;
+            summaryCard.classList.add('visible');
+          } else if (response?.error) {
+            const msg = response.error;
+            const isRateLimit = msg.toLowerCase().includes('rate limit') || msg.toLowerCase().includes('429');
+            setStatus('error',
+              `❌ ${msg}${isRateLimit ? ` <a href="options.html" target="_blank">${t('errRateLimit')}</a>` : ''}`
+            );
+          } else {
+            setStatus('error', `❌ ${t('errUnexpected')}`);
+          }
+        });
       }
     );
   });
 });
+
+document.addEventListener('DOMContentLoaded', applyI18n);

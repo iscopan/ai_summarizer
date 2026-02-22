@@ -1,0 +1,122 @@
+{
+    "extName": {
+        "message": "AI Summarizer"
+    },
+    "extDescription": {
+        "message": "Riassume qualsiasi pagina web tramite IA. Gratis, senza configurazione."
+    },
+    "apiKeyTitle": {
+        "message": "Chiave API"
+    },
+    "apiKeyDesc": {
+        "message": "Per usare l'estensione è necessaria una chiave API gratuita. Creala in pochi secondi."
+    },
+    "apiKeyPlaceholder": {
+        "message": "Incolla qui la tua chiave API"
+    },
+    "getKeyLink": {
+        "message": "Ottieni una chiave gratuita →"
+    },
+    "saveBtn": {
+        "message": "Salva"
+    },
+    "clearBtn": {
+        "message": "Cancella"
+    },
+    "keySaved": {
+        "message": "✅ Chiave salvata!"
+    },
+    "keyCleared": {
+        "message": "🗑 Chiave rimossa"
+    },
+    "keyEmpty": {
+        "message": "⚠️ Il campo è vuoto"
+    },
+    "keyStatus": {
+        "message": "Stato della chiave"
+    },
+    "keySet": {
+        "message": "✅ Salvata"
+    },
+    "keyNotSet": {
+        "message": "Non impostata"
+    },
+    "summarizeBtn": {
+        "message": "Riassumi questa pagina"
+    },
+    "summarizing": {
+        "message": "Riassumendo…"
+    },
+    "extracting": {
+        "message": "Estrazione del contenuto…"
+    },
+    "sendingToAI": {
+        "message": "Invio all'IA…"
+    },
+    "done": {
+        "message": "Fatto"
+    },
+    "summaryLabel": {
+        "message": "Riassunto"
+    },
+    "copy": {
+        "message": "Copia"
+    },
+    "copied": {
+        "message": "Copiato!"
+    },
+    "donate": {
+        "message": "Supporta il progetto ❤️"
+    },
+    "freeToUse": {
+        "message": "Gratuito"
+    },
+    "settingsTitle": {
+        "message": "AI Summarizer"
+    },
+    "settingsTagline": {
+        "message": "Riassumi istantaneamente qualsiasi pagina con l'IA — completamente gratis, senza configurazione."
+    },
+    "howToUse": {
+        "message": "Come si usa"
+    },
+    "step1": {
+        "message": "Vai su qualsiasi pagina che vuoi riassumere."
+    },
+    "step2": {
+        "message": "Clicca sull'icona di AI Summarizer nella barra di Chrome."
+    },
+    "step3": {
+        "message": "Premi « Riassumi questa pagina » e aspetta qualche secondo."
+    },
+    "step4": {
+        "message": "Leggi il riassunto e copialo negli appunti con un clic."
+    },
+    "supportTitle": {
+        "message": "Supporta & Contribuisci"
+    },
+    "supportDesc": {
+        "message": "Questa estensione è gratuita e open-source. Se ti fa risparmiare tempo, considera di supportarla!"
+    },
+    "donateBtn": {
+        "message": "Dona via PayPal"
+    },
+    "githubBtn": {
+        "message": "Vedi su GitHub"
+    },
+    "errNoTab": {
+        "message": "Scheda attiva non trovata."
+    },
+    "errNoContent": {
+        "message": "La pagina sembra non avere contenuto leggibile."
+    },
+    "errRead": {
+        "message": "Impossibile leggere la pagina:"
+    },
+    "errUnexpected": {
+        "message": "Risposta inattesa. Riprova."
+    },
+    "errRateLimit": {
+        "message": "Aggiungi chiave API →"
+    }
+}

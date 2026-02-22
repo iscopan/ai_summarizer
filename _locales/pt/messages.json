@@ -1,0 +1,122 @@
+{
+    "extName": {
+        "message": "AI Summarizer"
+    },
+    "extDescription": {
+        "message": "Resume qualquer página web com IA. Grátis, sem configuração."
+    },
+    "apiKeyTitle": {
+        "message": "Chave API"
+    },
+    "apiKeyDesc": {
+        "message": "Uma chave API gratuita é necessária para usar a extensão. Crie uma em segundos."
+    },
+    "apiKeyPlaceholder": {
+        "message": "Cole a sua chave API aqui"
+    },
+    "getKeyLink": {
+        "message": "Obter chave gratuita →"
+    },
+    "saveBtn": {
+        "message": "Guardar"
+    },
+    "clearBtn": {
+        "message": "Limpar"
+    },
+    "keySaved": {
+        "message": "✅ Chave guardada!"
+    },
+    "keyCleared": {
+        "message": "🗑 Chave removida"
+    },
+    "keyEmpty": {
+        "message": "⚠️ Campo vazio"
+    },
+    "keyStatus": {
+        "message": "Estado da chave"
+    },
+    "keySet": {
+        "message": "✅ Guardada"
+    },
+    "keyNotSet": {
+        "message": "Não definida"
+    },
+    "summarizeBtn": {
+        "message": "Resumir esta página"
+    },
+    "summarizing": {
+        "message": "A resumir…"
+    },
+    "extracting": {
+        "message": "A extrair conteúdo…"
+    },
+    "sendingToAI": {
+        "message": "A enviar para a IA…"
+    },
+    "done": {
+        "message": "Concluído"
+    },
+    "summaryLabel": {
+        "message": "Resumo"
+    },
+    "copy": {
+        "message": "Copiar"
+    },
+    "copied": {
+        "message": "Copiado!"
+    },
+    "donate": {
+        "message": "Apoiar o projeto ❤️"
+    },
+    "freeToUse": {
+        "message": "Grátis"
+    },
+    "settingsTitle": {
+        "message": "AI Summarizer"
+    },
+    "settingsTagline": {
+        "message": "Resuma instantaneamente qualquer página com IA — completamente grátis, sem configuração."
+    },
+    "howToUse": {
+        "message": "Como usar"
+    },
+    "step1": {
+        "message": "Aceda a qualquer página que pretenda resumir."
+    },
+    "step2": {
+        "message": "Clique no ícone do AI Summarizer na barra do Chrome."
+    },
+    "step3": {
+        "message": "Prima « Resumir esta página » e aguarde alguns segundos."
+    },
+    "step4": {
+        "message": "Leia o resumo e copie-o para a área de transferência com um clique."
+    },
+    "supportTitle": {
+        "message": "Apoiar & Contribuir"
+    },
+    "supportDesc": {
+        "message": "Esta extensão é gratuita e open-source. Se lhe poupar tempo, considere apoiá-la!"
+    },
+    "donateBtn": {
+        "message": "Doar via PayPal"
+    },
+    "githubBtn": {
+        "message": "Ver no GitHub"
+    },
+    "errNoTab": {
+        "message": "Separador ativo não encontrado."
+    },
+    "errNoContent": {
+        "message": "A página não parece ter conteúdo legível."
+    },
+    "errRead": {
+        "message": "Não foi possível ler a página:"
+    },
+    "errUnexpected": {
+        "message": "Resposta inesperada. Tente novamente."
+    },
+    "errRateLimit": {
+        "message": "Adicionar chave API →"
+    }
+}

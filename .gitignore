@@ -1,1 +1,6 @@
-/.DS_Store
+.DS_Store
+.env
+.env.*
+*.env
+node_modules/
+config.js

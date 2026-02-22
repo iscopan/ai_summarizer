@@ -1,0 +1,122 @@
+{
+    "extName": {
+        "message": "AI Summarizer"
+    },
+    "extDescription": {
+        "message": "Summarizes any webpage using AI. Free, no setup required."
+    },
+    "apiKeyTitle": {
+        "message": "API Key"
+    },
+    "apiKeyDesc": {
+        "message": "A free API key is required to use this extension. Create one for free in seconds."
+    },
+    "apiKeyPlaceholder": {
+        "message": "Paste your API key here"
+    },
+    "getKeyLink": {
+        "message": "Get a free key →"
+    },
+    "saveBtn": {
+        "message": "Save"
+    },
+    "clearBtn": {
+        "message": "Clear"
+    },
+    "keySaved": {
+        "message": "✅ Key saved!"
+    },
+    "keyCleared": {
+        "message": "🗑 Key removed"
+    },
+    "keyEmpty": {
+        "message": "⚠️ Field is empty"
+    },
+    "keyStatus": {
+        "message": "Key status"
+    },
+    "keySet": {
+        "message": "✅ Saved"
+    },
+    "keyNotSet": {
+        "message": "Not set"
+    },
+    "summarizeBtn": {
+        "message": "Summarize this page"
+    },
+    "summarizing": {
+        "message": "Summarizing…"
+    },
+    "extracting": {
+        "message": "Extracting page content…"
+    },
+    "sendingToAI": {
+        "message": "Sending to AI…"
+    },
+    "done": {
+        "message": "Done"
+    },
+    "summaryLabel": {
+        "message": "Summary"
+    },
+    "copy": {
+        "message": "Copy"
+    },
+    "copied": {
+        "message": "Copied!"
+    },
+    "donate": {
+        "message": "Support the project ❤️"
+    },
+    "freeToUse": {
+        "message": "Free to use"
+    },
+    "settingsTitle": {
+        "message": "AI Summarizer"
+    },
+    "settingsTagline": {
+        "message": "Summarize any webpage instantly using AI — completely free, no setup required."
+    },
+    "howToUse": {
+        "message": "How to use"
+    },
+    "step1": {
+        "message": "Navigate to any webpage you want to summarize."
+    },
+    "step2": {
+        "message": "Click the AI Summarizer icon in your Chrome toolbar."
+    },
+    "step3": {
+        "message": "Press Summarize this page and wait a few seconds."
+    },
+    "step4": {
+        "message": "Read the summary and copy it to your clipboard with one click."
+    },
+    "supportTitle": {
+        "message": "Support & Contribute"
+    },
+    "supportDesc": {
+        "message": "This extension is free and open-source. If it saves you time, consider supporting it!"
+    },
+    "donateBtn": {
+        "message": "Donate via PayPal"
+    },
+    "githubBtn": {
+        "message": "View on GitHub"
+    },
+    "errNoTab": {
+        "message": "Active tab not found."
+    },
+    "errNoContent": {
+        "message": "Page appears to have no readable content."
+    },
+    "errRead": {
+        "message": "Could not read page:"
+    },
+    "errUnexpected": {
+        "message": "Unexpected response. Try again."
+    },
+    "errRateLimit": {
+        "message": "Add API key →"
+    }
+}

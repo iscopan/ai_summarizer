@@ -1,0 +1,102 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    name: Validate Extension
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 1. Validate manifest.json ──────────────────────────────────────
+      - name: Validate manifest.json structure
+        run: |
+          echo "Checking manifest.json..."
+          # Ensure it parses as valid JSON
+          jq empty manifest.json
+          # Check required fields
+          name=$(jq -r '.name' manifest.json)
+          version=$(jq -r '.version' manifest.json)
+          mv=$(jq -r '.manifest_version' manifest.json)
+          [ -z "$name" ]    && echo "ERROR: 'name' missing"    && exit 1 || echo "  name: $name"
+          [ -z "$version" ] && echo "ERROR: 'version' missing" && exit 1 || echo "  version: $version"
+          [ -z "$mv" ]      && echo "ERROR: 'manifest_version' missing" && exit 1 || echo "  manifest_version: $mv"
+          # Ensure manifest_version is 3
+          [ "$mv" != "3" ]  && echo "ERROR: manifest_version must be 3, got $mv" && exit 1
+          echo "manifest.json OK"
+
+      # ── 2. Lint JavaScript ─────────────────────────────────────────────
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install ESLint
+        run: npm install --save-dev eslint@8 globals
+
+      - name: Create ESLint config
+        run: |
+          cat > eslint.config.mjs << 'EOF'
+          import globals from "globals";
+          export default [
+            {
+              languageOptions: {
+                globals: {
+                  ...globals.browser,
+                  chrome: "readonly",
+                },
+                ecmaVersion: 2022,
+                sourceType: "script",
+              },
+              rules: {
+                "no-undef": "error",
+                "no-unused-vars": "warn",
+                "no-console": "off",
+              },
+            },
+          ];
+          EOF
+
+      - name: Lint JavaScript files
+        run: |
+          echo "Linting JS files..."
+          npx eslint background.js popup.js options.js
+          echo "Lint OK"
+
+      # ── 3. Check required icon files ───────────────────────────────────
+      - name: Check icon files exist
+        run: |
+          echo "Checking icon files..."
+          for f in icons/icon16.png icons/icon48.png icons/icon128.png; do
+            [ ! -f "$f" ] && echo "ERROR: Missing $f" && exit 1 || echo "  Found $f"
+          done
+          echo "Icons OK"
+
+      # ── 4. Check required repository files ────────────────────────────
+      - name: Check required repository files
+        run: |
+          echo "Checking required files..."
+          for f in README.md CONTRIBUTING.md LICENSE; do
+            [ ! -f "$f" ] && echo "ERROR: Missing $f" && exit 1 || echo "  Found $f"
+          done
+          echo "Required files OK"
+
+      # ── 5. Check .env is not tracked ──────────────────────────────────
+      - name: Ensure .env is not committed
+        run: |
+          echo "Checking .env is not tracked by git..."
+          if git ls-files | grep -q '\.env$'; then
+            echo "ERROR: A .env file is tracked by git. Remove it immediately!"
+            exit 1
+          fi
+          echo ".env not tracked OK"
+
+      - name: Summary
+        run: echo "✅ All checks passed!"

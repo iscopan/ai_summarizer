@@ -1,98 +1,326 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>AI Summarizer</title>
   <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #0a1010;
+      --surface: #111a1a;
+      --surface2: #192424;
+      --accent: #0d9488;
+      --accent2: #2dd4bf;
+      --text: #e2fafa;
+      --text-muted: #7aa8a8;
+      --success: #34d399;
+      --error: #f87171;
+      --border: #1e3030;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      min-width: 350px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 15px;
-      background-color: #f4f4f9;
-      color: #333;
-      position: relative; /* Needed for absolute positioning of the gear icon */
+      width: 340px;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
     }
-    .options-link {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 20px; /* Adjust size as needed */
-      text-decoration: none;
-      color: #666;
-      transition: color 0.3s ease;
+
+    .header {
+      background: linear-gradient(135deg, #111a1a 0%, #0a1414 100%);
+      padding: 16px 18px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
     }
-    .options-link:hover, .donate-link:hover {
-      color: #006666; /* Darker teal for hover */
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .donate-link {
-      position: absolute;
-      top: 10px;
-      right: 40px; /* Position next to options */
-      font-size: 20px; /* Match options icon size */
-      text-decoration: none;
-      color: #666;
-      transition: color 0.3s ease;
+
+    .header-logo {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
     }
-    h3 {
-      text-align: center;
-      color: #006666; /* Darker teal for heading */
-      margin-top: 25px; /* Add margin to avoid overlap with icon */
-      margin-bottom: 15px;
-    }
-    .button-container {
-      text-align: center;
-      margin-bottom: 15px;
-    }
-    button {
-      padding: 10px 20px;
-      cursor: pointer;
-      background-color: #008080; /* Teal color */
-      color: white;
-      border: none;
-      border-radius: 5px;
+
+    .header-title {
       font-size: 14px;
-      transition: background-color 0.3s ease;
+      font-weight: 600;
+      color: var(--text);
     }
-    button:hover {
-      background-color: #006666; /* Darker teal for hover */
+
+    .header-actions {
+      display: flex;
+      gap: 4px;
     }
+
+    .icon-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 14px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .icon-btn:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .body {
+      padding: 16px 18px;
+    }
+
+    #summarizeBtn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, var(--accent) 0%, #0f766e 100%);
+      border: none;
+      border-radius: var(--radius);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    #summarizeBtn:hover:not(:disabled) {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+
+    #summarizeBtn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    #summarizeBtn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .status-wrap {
+      min-height: 28px;
+      margin-top: 12px;
+    }
+
     #status {
-      margin-top: 15px;
-      font-style: italic;
-      color: #666;
-      text-align: center;
-      min-height: 1.2em; /* Reserve space */
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 20px;
+      transition: all 0.2s;
     }
-    #summary {
-      margin-top: 15px;
-      white-space: pre-wrap;
-      max-height: 250px;
-      overflow-y: auto;
-      border: 1px solid #ddd;
-      padding: 10px;
-      background-color: #ffffff;
-      border-radius: 4px;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+
+    #status.loading {
+      background: rgba(13, 148, 136, 0.15);
+      color: var(--accent2);
+    }
+
+    #status.success {
+      background: rgba(52, 211, 153, 0.12);
+      color: var(--success);
+    }
+
+    #status.error {
+      background: rgba(248, 113, 113, 0.12);
+      color: var(--error);
+      border-radius: 8px;
+      padding: 6px 10px;
+      flex-wrap: wrap;
+    }
+
+    #status a {
+      color: var(--accent2);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .spinner {
+      width: 12px;
+      height: 12px;
+      border: 2px solid currentColor;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    #summary-card {
+      margin-top: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: none;
+    }
+
+    #summary-card.visible {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .summary-header {
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+
+    .summary-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    #copyBtn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
       font-size: 13px;
-      line-height: 1.5;
+      padding: 2px 6px;
+      border-radius: 6px;
+      transition: background 0.2s, color 0.2s;
     }
-    #summary:empty { /* Hide border when empty */
-        border: none;
-        padding: 0;
-        margin-top: 0;
+
+    #copyBtn:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    #summary {
+      padding: 14px;
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--text);
+      max-height: 220px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .footer {
+      padding: 10px 18px 14px;
+      text-align: center;
+    }
+
+    .footer-note {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .footer-note a {
+      color: var(--accent2);
+      text-decoration: none;
+    }
+
+    .footer-note a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
+
 <body>
-  <a href="https://paypal.me/iscopan" target="_blank" class="donate-link" title="Donate">❤️</a>
-  <a href="options.html" target="_blank" class="options-link" title="Options">⚙️</a>
-  <h3>Summarize this page</h3>
-  <div class="button-container">
-    <button id="summarizeBtn">Summarize</button>
+
+  <div class="header">
+    <div class="header-brand">
+      <div class="header-logo">✨</div>
+      <div class="header-title">AI Summarizer</div>
+    </div>
+    <div class="header-actions">
+      <a href="https://paypal.me/iscopan" target="_blank" class="icon-btn" title="Donate">❤️</a>
+      <a href="options.html" target="_blank" class="icon-btn" title="Settings">⚙️</a>
+    </div>
   </div>
-  <div id="status"></div>
-  <div id="summary"></div>
+
+  <div class="body">
+    <button id="summarizeBtn">
+      <span id="btnIcon">⚡</span>
+      <span id="btnText">Summarize this page</span>
+    </button>
+
+    <div class="status-wrap">
+      <div id="status"></div>
+    </div>
+
+    <div id="summary-card">
+      <div class="summary-header">
+        <span class="summary-label" id="summaryLabel">Summary</span>
+        <button id="copyBtn" title="Copy">📋</button>
+      </div>
+      <div id="summary"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p class="footer-note">
+      <span id="footerFree">Free to use</span>
+      &bull;
+      <a href="https://paypal.me/iscopan" target="_blank" id="footerDonate">Support the project ❤️</a>
+    </p>
+  </div>
 
   <script src="popup.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,122 @@
+{
+    "extName": {
+        "message": "AI Summarizer"
+    },
+    "extDescription": {
+        "message": "Fasst beliebige Webseiten per KI zusammen. Kostenlos, ohne Einrichtung."
+    },
+    "apiKeyTitle": {
+        "message": "API-Schlüssel"
+    },
+    "apiKeyDesc": {
+        "message": "Für die Nutzung der Erweiterung ist ein kostenloser API-Schlüssel erforderlich."
+    },
+    "apiKeyPlaceholder": {
+        "message": "API-Schlüssel hier einfügen"
+    },
+    "getKeyLink": {
+        "message": "Kostenlosen Schlüssel holen →"
+    },
+    "saveBtn": {
+        "message": "Speichern"
+    },
+    "clearBtn": {
+        "message": "Löschen"
+    },
+    "keySaved": {
+        "message": "✅ Schlüssel gespeichert!"
+    },
+    "keyCleared": {
+        "message": "🗑 Schlüssel entfernt"
+    },
+    "keyEmpty": {
+        "message": "⚠️ Feld ist leer"
+    },
+    "keyStatus": {
+        "message": "Schlüsselstatus"
+    },
+    "keySet": {
+        "message": "✅ Gespeichert"
+    },
+    "keyNotSet": {
+        "message": "Nicht festgelegt"
+    },
+    "summarizeBtn": {
+        "message": "Diese Seite zusammenfassen"
+    },
+    "summarizing": {
+        "message": "Zusammenfassen\u2026"
+    },
+    "extracting": {
+        "message": "Inhalt wird extrahiert\u2026"
+    },
+    "sendingToAI": {
+        "message": "An KI senden\u2026"
+    },
+    "done": {
+        "message": "Fertig"
+    },
+    "summaryLabel": {
+        "message": "Zusammenfassung"
+    },
+    "copy": {
+        "message": "Kopieren"
+    },
+    "copied": {
+        "message": "Kopiert!"
+    },
+    "donate": {
+        "message": "Projekt unterst\u00fctzen \u2764\ufe0f"
+    },
+    "freeToUse": {
+        "message": "Kostenlos"
+    },
+    "settingsTitle": {
+        "message": "AI Summarizer"
+    },
+    "settingsTagline": {
+        "message": "Fassen Sie jede Webseite sofort per KI zusammen \u2014 v\u00f6llig kostenlos, ohne Einrichtung."
+    },
+    "howToUse": {
+        "message": "Verwendung"
+    },
+    "step1": {
+        "message": "Besuchen Sie eine Webseite, die Sie zusammenfassen m\u00f6chten."
+    },
+    "step2": {
+        "message": "Klicken Sie auf das AI Summarizer-Symbol in der Chrome-Symbolleiste."
+    },
+    "step3": {
+        "message": "Klicken Sie auf 'Seite zusammenfassen' und warten Sie einige Sekunden."
+    },
+    "step4": {
+        "message": "Lesen Sie die Zusammenfassung und kopieren Sie sie mit einem Klick."
+    },
+    "supportTitle": {
+        "message": "Unterst\u00fctzen & Beitragen"
+    },
+    "supportDesc": {
+        "message": "Diese Erweiterung ist kostenlos und Open-Source. Wenn Sie Zeit sparen, unterst\u00fctzen Sie uns gerne!"
+    },
+    "donateBtn": {
+        "message": "\u00dcber PayPal spenden"
+    },
+    "githubBtn": {
+        "message": "Auf GitHub ansehen"
+    },
+    "errNoTab": {
+        "message": "Aktiver Tab nicht gefunden."
+    },
+    "errNoContent": {
+        "message": "Die Seite scheint keinen lesbaren Inhalt zu haben."
+    },
+    "errRead": {
+        "message": "Seite konnte nicht gelesen werden:"
+    },
+    "errUnexpected": {
+        "message": "Unerwartete Antwort. Bitte erneut versuchen."
+    },
+    "errRateLimit": {
+        "message": "API-Schl\u00fcssel hinzuf\u00fcgen \u2192"
+    }
+}
