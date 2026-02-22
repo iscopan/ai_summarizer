@@ -1,12 +1,11 @@
 // Load API key from config.js (gitignored, never committed to GitHub).
 // Falls back to empty string if config.js is missing (fresh clone / dev without key).
 // See config.example.js for the template.
-var CONFIG = { apiKey: '' };
+var CONFIG = { apiKey: '', model: 'openrouter/free' };
 try { importScripts('config.js'); } catch (e) { /* config.js not present */ }
 
 // --- AI Settings ---
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const DEFAULT_MODEL = 'openrouter/free';
 const MAX_TEXT_LENGTH = 15000;
 
 // Listen for messages from the popup
@@ -43,7 +42,7 @@ async function callOpenRouter(text) {
   }
 
   const requestBody = {
-    model: DEFAULT_MODEL,
+    model: CONFIG.model || 'openrouter/free',
     messages: [{ role: "user", content: prompt }],
     max_tokens: 400,
     temperature: 0.5,
